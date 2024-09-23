@@ -184,7 +184,7 @@ curl "http://sandbox.usm.md/login/process.php" ^
 - `201`: Сервер также успешно обработал запрос и создал автомобиль, выдал в ответе сообщение `Created`
 
    При попытке отослать такой запрос:
-   ```http
+   ```cmd
    curl -L -X POST "http://sandbox.com/cars" ^
      -H "Content-Type: application/json ^
      -H "User-Agent: John Doe" ^
