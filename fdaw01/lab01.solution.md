@@ -203,9 +203,10 @@ curl "http://sandbox.usm.md/login/process.php" ^
    ```
 
    **Результат:**
+   
    ![quest step 1](./.images/image07.png)
-591783
-2. Отправка запроса с логином имея полученные данные. (Получены `id: 430129`, `token: HRQBNQZFFAkSECASATUe`)
+
+3. Отправка запроса с логином имея полученные данные. (Получены `id: 430129`, `token: HRQBNQZFFAkSECASATUe`)
 
    ```bash
    curl -X POST http://sandbox.usm.md/quest/login -H  "User-Agent: Tulan Vladislav"
@@ -213,11 +214,12 @@ curl "http://sandbox.usm.md/login/process.php" ^
    ```
 
    **Результат:**
+   
    ![quest step 2](./.images/image08.png)
 
    *Тут я не убрал заголовок `User-Agent` и заметил, что сервер обработал его повторно и выдал мне новый id и тотже токен, после чего он начал проверять следющий заголовок, который нужен был уже для 2-го шага. Полагаю, если бы я случайно не оставил первый заголовок и отправил только с `Authorization`, то такого интересного поведения сервера и не заметил бы :)*
 
-3. Отправка запроса с возрастом. 
+5. Отправка запроса с возрастом. 
 
    Был составлен и отправлен следующий запрос:
    ```bash
@@ -228,6 +230,7 @@ curl "http://sandbox.usm.md/login/process.php" ^
    ```
 
    **Результат:**
+   
    ![quest step 3 failed attempt](./.images/image09.png)
 
    *Хм, неужели сервер хочет принять возраст как значение типа String, а не целочисленное*
@@ -241,9 +244,11 @@ curl "http://sandbox.usm.md/login/process.php" ^
    ```
 
    И снова неудача
+   
    ![quest step 3 failed attempt 2](./.images/image10.png)
 
    Немного stackoverflow:
+   
    ![stackoverflow suggestion](./.images/image11.png)
    
    Пробую:
@@ -254,6 +259,7 @@ curl "http://sandbox.usm.md/login/process.php" ^
    ```
 
    Уже лучше, почти у цели :D
+   
    ![quest step 3 failed attempt 3](./.images/image12.png)
 
    Уберу кавычки у значения возраста:
@@ -273,28 +279,32 @@ curl "http://sandbox.usm.md/login/process.php" ^
    ``` 
 
    Finally...
+   
    ![Step 3 success mzfk!!!](./.images/image13.png)
 
    *Как же все таки важно внимательно читать инструкции и следовать им :)*
 
-4. Финальный шаг с секретным словом.
+7. Финальный шаг с секретным словом.
 
    ```bash
    curl -X GET http://sandbox.usm.md/quest/secret?token=HRQBNQZFFAkSEFsACAcSXldTQVF5VlhhXVY=
    ``` 
 
    Та-даам:
+   
    ![step 4 success](./.images/image14.png)
 
    **Секретное слово:** **`PTkDFwtpNQktBR0HCUAfYV1E`**
 
    хмм..что же оно значит?
 
-   base64? 
+   base64?
+   
    ![base64 secret decode](./.images/image15.png)
+
    нет
 
    Имя json файла также декодируется в что-то непонятное:
-   ![alt text](./.images/image16.png)
+      ![alt text](./.images/image16.png)
 
    *Кажется я вспомнил, что на паре было сказано, что для расшифровки нужен private key...штош, не судьба узнать что скрывается за секретным словом :)*
